@@ -125,8 +125,7 @@ CREATE TABLE IF NOT EXISTS `orders`(
     `sync_count` int(11) NOT NULL DEFAULT '0' COMMENT '记录同步次数',
     `sync_express_ship` tinyint(1) NOT NULL DEFAULT '0' COMMENT '物流跟踪标记 0 未发货 1 已发货 2 已签收',
     PRIMARY KEY (`order_id`),
-    KEY `reference_no` (`reference_no`) USING BTREE,
-
+    KEY `reference_no` (`reference_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单信息表';
 
 #订单标签表
@@ -182,4 +181,4 @@ CREATE TABLE IF NOT EXISTS `order_additional` (
   KEY `order_code` (`order_code`),
   KEY `oa_order_id` (`order_id`,`oa_is_checking`) USING BTREE,
   KEY `idx_is_checking` (`oa_is_checking`)
-) ENGINE=InnoDB AUTO_INCREMENT=69846 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='订单属性表(一对一)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='订单属性表(一对一)';
