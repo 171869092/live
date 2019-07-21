@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('hello','UserController@index');
+Route::get('auth','authorization@runAuthorization');
