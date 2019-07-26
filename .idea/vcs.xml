@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/laravel/amazon-mws" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/laravel/app/amazon-mws" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/laravel/mcs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/laravel/test/amazon-mws" vcs="Git" />
   </component>
 </project>
