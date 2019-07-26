@@ -1,0 +1,21 @@
+.right_banner img{      /*banner中的图片高度*/
+        height:100%;
+    }
+.swiper-pagination-bullet{background-color: #fff}    /*banner中的圆点*/
+.layui-layer.layui-anim.layui-layer-loading{
+    position: fixed !important;
+    top:50% !important;
+    left:50%;
+}
+
+/*后台管理选中:*/
+#freight_templates_new .left_sidebar .option-box:nth-child(6) {
+    background: #339999;
+}
+.activeBJ{
+    background: #339999 !important;
+}
+.activebj_none{
+    background-color:transparent !important;
+}
+
