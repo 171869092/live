@@ -4,8 +4,8 @@
     <meta content="webkit" name="renderer" />
     <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
     <meta content="upgrade-insecure-requests" http-equiv="Content-Security-Policy" />
-    <link rel="stylesheet" href="{{ URL::asset('css/index.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/application.css') }}">
+    <link rel="stylesheet" href="{{ URL('css/index.css') }}">
+    <link rel="stylesheet" href="{{ URL('css/application.css') }}">
     <meta content="" name="keywords" />
     <meta content="" name="description" />
     <!-- [if lt IE 9]>
@@ -13,8 +13,8 @@
     <![endif]-->
     <title>后台首页</title>
     <!--新引入样式-->
-    <link rel="stylesheet" href="{{ URL::asset('css/swiper.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/common.css') }}">
+    <link rel="stylesheet" href="{{ URL('css/swiper.min.css') }}">
+    <link rel="stylesheet" href="{{ URL('css/common.css') }}">
 </head>
 <body data-current_user="true" data-exchange_rate="6.87" data-user_status="2" id="sells_homes_index">
 <nav class="left_sidebar">
@@ -31,7 +31,7 @@
         </a>
         <div class="hide-box">
             <div class="each-item">
-                <a href="{{ url('userIndex', '') }}">基本资料</a>
+                <a href="{{ url('userIndex') }}">基本资料</a>
             </div>
             <div class="each-item">
                 <a href="{{ url('userSafety', '') }}">账号安全</a>
@@ -594,10 +594,10 @@
             <div class="right_banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="{{ URL::asset('images/1.jpg') }}" alt=""></div>
-                        <div class="swiper-slide"><img src="{{ URL::asset('images/2.jpg') }}" alt=""></div>
-                        <div class="swiper-slide"><img src="{{ URL::asset('images/3.jpg') }}" alt=""></div>
-                        <div class="swiper-slide"><img src="{{ URL::asset('images/4.jpg') }}" alt=""></div>
+                        <div class="swiper-slide"><img src="{{ URL('images/1.jpg') }}" alt=""></div>
+                        <div class="swiper-slide"><img src="{{ URL('images/2.jpg') }}" alt=""></div>
+                        <div class="swiper-slide"><img src="{{ URL('images/3.jpg') }}" alt=""></div>
+                        <div class="swiper-slide"><img src="{{ URL('images/4.jpg') }}" alt=""></div>
                     </div>
                     <!-- Add Pagination -->
                     <div class="swiper-pagination"></div>
@@ -1280,9 +1280,9 @@
     </div>
 </footer>
 <!--<script src="https://cdn-resources-aliyun.kjds.com/assets/application_sells-1e01a053e31430befceb09922f981f78.js" data-turbolinks-track="true"></script>-->
-<script src="{{ URL::asset('js/jquery-3.4.1.min.js') }}"></script>
-<script src="{{ URL::asset('js/swiper.min.js') }}"></script>
-<script src="{{ URL::asset('js/common.js') }}"></script>
+<script src="{{ URL('js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ URL('js/swiper.min.js') }}"></script>
+<script src="{{ URL('js/common.js') }}"></script>
 <script>
     //轮播图
     var swiper = new Swiper('.swiper-container', {
