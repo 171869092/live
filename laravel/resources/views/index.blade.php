@@ -3,9 +3,8 @@
     <meta charset="utf-8" />
     <meta content="webkit" name="renderer" />
     <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
-    <meta content="upgrade-insecure-requests" http-equiv="Content-Security-Policy" />
-    <link rel="stylesheet" href="{{ URL('css/index.css') }}">
-    <link rel="stylesheet" href="{{ URL('css/application.css') }}">
+    <link rel="stylesheet" href="{{ URL('/css/index.css') }}">
+    <link rel="stylesheet" href="{{ URL('/css/application.css') }}">
     <meta content="" name="keywords" />
     <meta content="" name="description" />
     <!-- [if lt IE 9]>
