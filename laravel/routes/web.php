@@ -42,6 +42,10 @@ Route::get('safetyQuestion','UserController@safetyQuestion'); #-- securityQuesti
 Route::get('setPage','UserController@setPage'); #-- set page
 Route::get('subscribe','UserController@subscribe'); #-- subscribe
 
+#.一件刊登
+Route::get('place','PlaceController@index'); #-- products
+Route::get('freightTmp','PlaceController@freightTmp'); #-- products
+
 
 Route::get('inventories','InventoryController@index');
 //Route::get('auth','authorization@runAuthorization');

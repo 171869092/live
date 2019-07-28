@@ -64,16 +64,16 @@
         </div>
     </div>
     <div class="option-box hover-box">
-        <a href="/sells/products"><img src="https://cdn-resources-aliyun.kjds.com/assets/sells/users/icon2-1eff06d5ed25119d8303581f95aa5aa8.png" alt="Icon2" />
+        <a href="{{ url('place', '') }}"><img src="https://cdn-resources-aliyun.kjds.com/assets/sells/users/icon2-1eff06d5ed25119d8303581f95aa5aa8.png" alt="Icon2" />
             <div class="name">
                 一键刊登
             </div></a>
         <div class="hide-box">
             <div class="each-item">
-                <a href="./publish/products.html">我的刊登商品</a>
+                <a href="{{ url('place', '') }}">我的刊登商品</a>
             </div>
             <div class="each-item">
-                <a href="./publish/freight_templates.html">eBay物流模板</a>
+                <a href="{{ url('freightTmp', '') }}">eBay物流模板</a>
             </div>
         </div>
     </div>
