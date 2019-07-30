@@ -48,4 +48,4 @@ Route::get('freightTmp','PlaceController@freightTmp'); #-- products
 
 
 Route::get('inventories','InventoryController@index');
-//Route::get('auth','authorization@runAuthorization');
+Route::get('authtest','authorization@runAuthorization');

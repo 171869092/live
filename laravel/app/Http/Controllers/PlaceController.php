@@ -14,6 +14,7 @@ class PlaceController extends Controller
      */
     public function index()
     {
+
         return View::make('place.products');
     }
 
