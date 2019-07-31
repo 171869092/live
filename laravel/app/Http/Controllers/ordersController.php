@@ -2,18 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Service\orders as ORDERS;
+use Illuminate\Http\Request as REQ;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use Illuminate\Routing\Controller;
 
-class ordersController extends Controller
+class ordersController extends CommonController
 {
     /**
      * order list
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(){
-        return View::make('orders.list');
+    public function index(REQ $request){
+        $return = $this->returnArr;
+        $params = $request->all();
+        $page = $request->input('page',1);
+        if (empty($params)) {
+            $return['state'] = 1;
+            $return['message'] = 'fail error';
+            return $this->returnJsons($return);
+        }
+        $res = DB::table('orders')->simplePaginate($page)->items();
+        if (!empty($res)) {
+            $return['state'] = 1;
+            $return['message'] = 'success';
+            $return['data'] = $res;
+        }else{
+            $return['message'] = 'Fail';
+        }
+        return $this->returnJsons($return);
+//        return View::make('orders.list');
     }
 
     /**
