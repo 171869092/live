@@ -17,12 +17,14 @@ class ordersController extends CommonController
         $return = $this->returnArr;
         $params = $request->all();
         $page = $request->input('page',1);
-        if (empty($params)) {
-            $return['state'] = 1;
-            $return['message'] = 'fail error';
-            return $this->returnJsons($return);
-        }
-        $res = DB::table('orders')->simplePaginate($page)->items();
+        $pageSize = $request->input('pageSize',1);
+
+//        if (empty($params)) {
+//            $return['state'] = 1;
+//            $return['message'] = 'fail error';
+//            return $this->returnJsons($return);
+//        }
+        $res = DB::table('orders')->paginate($pageSize,['*'],'page',$page)->toArray();
         if (!empty($res)) {
             $return['state'] = 1;
             $return['message'] = 'success';

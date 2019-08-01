@@ -6,6 +6,7 @@ use Illuminate\Http\Request as req;
 use Illuminate\Support\Facades\View;
 use App\Table\product as product;
 use Illuminate\Support\Facades\DB;
+use App\Service\product as ServicePro;
 
 class PlaceController extends CommonController
 {
@@ -18,21 +19,21 @@ class PlaceController extends CommonController
         $return = $this->returnArr;
         $request->all();
         $page = $request->input('page',1);
-//        $pageSize = $request->input('pageSize',20);
-        if (empty($params)) {
-            $return['state'] = 1;
-            $return['message'] = 'fail error';
-            return $this->returnJsons($return);
-        }
-        $res = DB::table('product')->simplePaginate($page)->items();
+        $pageSize = $request->input('pageSize',1);
+//        if (empty($params)) {
+//            $return['state'] = 1;
+//            $return['message'] = 'fail error';
+//            return $this->returnJsons($return);
+//        }
+        $res = DB::table('product')->paginate($pageSize,['*'],'page',$page)->toArray();
         if (!empty($res)) {
             $return['state'] = 1;
             $return['message'] = 'success';
             $return['data'] = $res;
         }
 
-        return $this->returnJsons($return);
-//        return View::make('place.products');
+//        return $this->returnJsons($return);
+        return View::make('place.products');
     }
 
     /**
@@ -43,4 +44,23 @@ class PlaceController extends CommonController
     {
         return View::make('place.freightTmp');
     }
+
+
+    /**
+     * edit product
+     * @param req $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function placeEdit(req $request){
+        $return = $this->returnArr;
+        $params = $request->input();
+        $res = ServicePro::saveProduct($params);
+        if ($res){
+            $return['state'] = 1;
+            $return['message'] = 'success';
+        }
+        return $this->returnJsons($return);
+    }
+
+
 }
