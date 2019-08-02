@@ -45,8 +45,19 @@ class AuthController extends CommonController
         $return = $this->returnArr;
         $params = $request->all();
         if (empty($params)){
-//            $return['state'] = 1;
+//            $return['state'] = 0;
 //            $return['message'] = 'parameter error';
+//            return $this->returnJsons($return);
+        }
+        if (empty($params['seller_id'])){
+//            $return['state'] = 0;
+//            $return['message'] = 'seller_id 不能为空';
+//            return $this->returnJsons($return);
+        }
+        $seller =DB::table('user_system_authorization')->where('usa_seller_id','=',$params['seller_id'])->get();
+        if (empty($seller)){
+//            $return['state'] = 0;
+//            $return['message'] = '该账户授权绑定已经存在';
 //            return $this->returnJsons($return);
         }
         $params['platform'];
