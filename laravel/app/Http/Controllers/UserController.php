@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Service\user;
+use Illuminate\Http\Request as REQ;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Routing\Controller;
 
-class UserController extends Controller
+class UserController extends CommonController
 {
     /**
      * index
@@ -88,4 +90,37 @@ class UserController extends Controller
     {
         return View::make('user.subscribe');
     }
+
+    /**
+     * index get user right meuen
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+
+    public function getUrserRight(){
+        $return = $this->returnArr;
+        $userId = session('userId');
+        if (empty($userId)){
+            $return['state'] = 0;
+            $return['message'] = '未找到该用户';
+        }
+        $res = DB::table('user as A')
+            ->where('A.user_status','=',1)
+            ->leftJoin('user_position as B','A.user_id','=','B.us_id')
+            ->leftJoin('user_right as C','B.up_id','=','C.up_id')
+            ->get(['A.user_name','A.user_password_update_time','A.user_phone','B.up_name','C.ur_name'])
+            ->toArray();
+
+        if (empty($res)){
+            $return['state'] = 0;
+            $return['message'] = 'Fail!';
+        }else{
+            $return['state'] = 1;
+            $return['message'] = 'Success!';
+            $return['data'] = $res;
+        }
+
+        return $this->returnJsons($return);
+    }
+
 }

@@ -41,6 +41,8 @@ Route::get('addPayPwd','UserController@addPayPwd'); #-- addPayPwd
 Route::get('safetyQuestion','UserController@safetyQuestion'); #-- securityQuestion
 Route::get('setPage','UserController@setPage'); #-- set page
 Route::get('subscribe','UserController@subscribe'); #-- subscribe
+#.获取用户权限菜单
+Route::get('getUrserRight','UserController@getUrserRight'); #-- getUrserRight
 
 #.一件刊登
 Route::get('place','PlaceController@index'); #-- products
@@ -50,4 +52,4 @@ Route::get('freightTmp','PlaceController@freightTmp'); #-- products
 Route::get('inventories','InventoryController@index');
 Route::get('authtest','authorization@runAuthorization');
 
-Route::get('test','AuthController@authSave');
+Route::get('test','UserController@urserRight');

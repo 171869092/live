@@ -30,4 +30,10 @@ class CommonController extends Controller
             'data'    => $data['data'],
         ]);
     }
+
+    //对象转数组
+    public function Arr($obj)
+    {
+        return json_decode(json_encode($obj), true);
+    }
 }

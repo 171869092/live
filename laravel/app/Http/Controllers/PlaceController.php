@@ -32,8 +32,8 @@ class PlaceController extends CommonController
             $return['data'] = $res;
         }
 
-//        return $this->returnJsons($return);
-        return View::make('place.products');
+        return $this->returnJsons($return);
+//        return View::make('place.products');
     }
 
     /**

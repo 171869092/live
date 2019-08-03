@@ -31,3 +31,11 @@ class EnableCrossRequestMiddleware
         return $response;
     }
 }
+
+
+//订单操作--- 一件发货 | 自行发货 |
+//
+//一件发货： 后台订单管理员拿 --  填写运单号
+//自行发货 ： 自动发货
+//
+//异常订单： 订单信息
