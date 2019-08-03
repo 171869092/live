@@ -68,4 +68,15 @@ class ordersController extends CommonController
         return View::make('orders.import');
     }
 
+
+    public function forecast(REQ $request){
+        $return = $this->returnArr;
+        $orderId = $request->input('orderId','');
+        if (empty($orderId)){
+            $return['state'] = 1;
+            $return['message'] = 'parameter is not empty!';
+        }
+        return $this->returnJsons($return);
+    }
+
 }

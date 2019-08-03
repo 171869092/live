@@ -45,29 +45,67 @@ class AuthController extends CommonController
         $return = $this->returnArr;
         $params = $request->all();
         if (empty($params)){
-//            $return['state'] = 0;
-//            $return['message'] = 'parameter error';
-//            return $this->returnJsons($return);
+            $return['state'] = 0;
+            $return['message'] = '参数错误';
+            return $this->returnJsons($return);
         }
+
         if (empty($params['seller_id'])){
-//            $return['state'] = 0;
-//            $return['message'] = 'seller_id 不能为空';
-//            return $this->returnJsons($return);
+            $return['state'] = 0;
+            $return['message'] = '卖家id不能为空';
+            return $this->returnJsons($return);
         }
+
+        if (empty($params['store_name'])){
+            $return['state'] = 0;
+            $return['message'] = '店铺名称不能为空';
+            return $this->returnJsons($return);
+        }
+
+        if (empty($params['platform'])){
+            $return['state'] = 0;
+            $return['message'] = '平台类型不能为空';
+            return $this->returnJsons($return);
+        }
+
+        if (empty($params['site'])){
+            $return['state'] = 0;
+            $return['message'] = '地区不能为空';
+            return $this->returnJsons($return);
+        }
+
+        if (empty($params['token'])){
+            $return['state'] = 0;
+            $return['message'] = '授权码不能为空';
+            return $this->returnJsons($return);
+        }
+
         $seller =DB::table('user_system_authorization')->where('usa_seller_id','=',$params['seller_id'])->get();
         if (empty($seller)){
-//            $return['state'] = 0;
-//            $return['message'] = '该账户授权绑定已经存在';
-//            return $this->returnJsons($return);
+            $return['state'] = 0;
+            $return['message'] = '该账户授权绑定已经存在';
+            return $this->returnJsons($return);
         }
-        $params['platform'];
-        $params['store_name'];
-        $params['status'];
-        $params['site'];
-        $params['seller_id'];
-        $params['token'];
-        $return['state'] = 1;
-        $return['message'] = 'success';
+
+        $uid = session('user_id')?session('user_id'):1;
+        $res = DB::table('user_system_authorization')->insertGetId([
+            'user_id' => $uid,
+            'usa_region' => $params['site'],
+            'usa_seller_id' => $params['seller_id'],
+            'usa_auth_code' => $params['token'],
+            'usa_add_time' => date("Y-m-d H:i:s"),
+            'usa_auth_time' => date("Y-m-d H:i:s"),
+            'store_name' => $params['store_name'],
+            'platform' => $params['platform']
+        ]);
+        if ($res){
+            $return['state'] = 1;
+            $return['message'] = 'Success!';
+        }else{
+            $return['state'] = 0;
+            $return['message'] = 'Fail!';
+        }
+
         return $this->returnJsons($return);
     }
 

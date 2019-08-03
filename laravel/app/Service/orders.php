@@ -52,4 +52,8 @@ class orders extends Model
         return $result;
     }
 
+    public function execForecast($order){
+
+    }
+
 }

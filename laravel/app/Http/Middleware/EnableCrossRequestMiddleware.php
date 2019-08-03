@@ -18,7 +18,9 @@ class EnableCrossRequestMiddleware
     {
         $response = $next($request);
         $origin = $request->server('HTTP_ORIGIN') ? $request->server('HTTP_ORIGIN') : '';
-        $allow_origin = config('origin.allowed');
+        $allow_origin = [
+            'http://127.0.0.1:8080',//允许访问
+        ];
         if (in_array($origin, $allow_origin)) {
             $response->header('Access-Control-Allow-Origin', $origin);
             $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Cookie, X-CSRF-TOKEN, Accept, Authorization, X-XSRF-TOKEN');
