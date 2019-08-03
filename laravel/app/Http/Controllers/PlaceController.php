@@ -55,9 +55,26 @@ class PlaceController extends CommonController
         $return = $this->returnArr;
         $params = $request->input();
         $res = ServicePro::saveProduct($params);
+
         if ($res){
             $return['state'] = 1;
             $return['message'] = 'success';
+        }
+        return $this->returnJsons($return);
+    }
+
+    public function getCategory(req $request){
+        $return = $this->returnArr;
+        $page = $request->input('page',1);
+        $pageSize = $request->input('pageSize',10);
+        $res = DB::table('product_category')->paginate($pageSize,['*'],'page',$page)->toArray();
+        if (empty($res)){
+            $return['state'] = 0;
+            $return['message'] = 'Fail!';
+        }else{
+            $return['state'] = 1;
+            $return['data'] = $res;
+            $return['message'] = 'Success!';
         }
         return $this->returnJsons($return);
     }

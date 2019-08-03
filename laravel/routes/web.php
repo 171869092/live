@@ -53,3 +53,5 @@ Route::get('inventories','InventoryController@index');
 Route::get('authtest','authorization@runAuthorization');
 
 Route::get('test','UserController@urserRight');
+Route::get('testPlaceEdit','PlaceController@placeEdit');
+Route::get('testgetCategory','PlaceController@getCategory');
