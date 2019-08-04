@@ -22,7 +22,7 @@ class authorization extends BaseController{
     {
         $data = $request->all();
         $client = new MC([
-            'Marketplace_Id' => 'A1F83G8C2ARO7P',
+            'Marketplace_Id' => $data['type'],
             'Seller_Id' => $data['Seller_Id'],
             'Access_Key_ID' => $data['Access_Key_ID'],
             'Secret_Access_Key' => $data['Secret_Access_Key'],
