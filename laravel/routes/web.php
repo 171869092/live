@@ -47,6 +47,7 @@ Route::get('getUrserRight','UserController@getUrserRight'); #-- getUrserRight
 #.一件刊登
 Route::get('place','PlaceController@index'); #-- products
 Route::get('freightTmp','PlaceController@freightTmp'); #-- products
+Route::get('getCategory','PlaceController@getCategory'); #-- products
 
 
 Route::get('inventories','InventoryController@index');
