@@ -5,12 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request as req;
 use Illuminate\Support\Facades\DB;
+use MarketplaceWebServiceOrders_Model_GetServiceStatusRequest;
+use App\Service\Common;
 
 class AuthController extends CommonController
 {
+    public static $webArr = [
+        'eu' => "https://mws-eu.amazonservices.com/Orders/2013-09-01"
+    ];
+    public $configur = [];
+    public static $site = 'amzn.mws.3eb3a9ec-b6e3-3567-90b6-7a814f7624d9';
+
     public function __construct()
     {
-        $this->middleware('');
+        if (empty($this->configur)){
+            $this->configur = [
+                'ServiceURL' => '',
+                'ProxyHost' => null,
+                'ProxyPort' => -1,
+                'ProxyUsername' => null,
+                'ProxyPassword' => null,
+                'MaxErrorRetry' => 3,
+            ];
+        }
+
     }
     //
     /**
@@ -119,13 +137,45 @@ class AuthController extends CommonController
     public function authCheck(req $request){
         $return = $this->returnArr;
         $authId = $request->input('auth_id');
-        if (empty($params)){
+
+        if (empty($authId)){
             $return['state'] = 0;
             $return['message'] = '参数错误';
             return $this->returnJsons($return);
         }
-        $seller =DB::table('user_system_authorization')->where('usa_seller_id','=',$params['seller_id'])->get();
 
+        $auth =DB::table('user_system_authorization')->where('usa_id','=',$authId)->get();
+
+        if (empty($auth)){
+            $return['state'] = 0;
+            $return['message'] = '参数错误';
+            return $this->returnJsons($return);
+        }
+        require_once(__DIR__.'/../../src/MarketplaceWebServiceOrders/Samples/.config.inc.php');
+        $serviceUrl = self::$webArr['eu'];
+
+        $this->configur['ServiceURL'] = $serviceUrl;
+        $obj = new \MarketplaceWebServiceOrders_Client(AWS_ACCESS_KEY_ID,
+            AWS_SECRET_ACCESS_KEY,
+            APPLICATION_NAME,
+            APPLICATION_VERSION,
+            $this->configur);
+
+        $request = new MarketplaceWebServiceOrders_Model_GetServiceStatusRequest();
+        $request->setSellerId(MERCHANT_ID);
+        $request->setMWSAuthToken(self::$site);
+        // object or array of parameters
+
+        $result = Common::invokeGetServiceStatus($obj, $request);
+        if (true === $result){
+            $return['state'] = 1;
+            $return['message'] = 'Success';
+        }else{
+            $return['state'] = 0;
+            $return['message'] = 'Fail';
+        }
+
+        return $this->returnJsons($return);
     }
 
 }
