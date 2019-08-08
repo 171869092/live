@@ -30,6 +30,7 @@ Route::get('import','ordersController@import'); #-- import
 #.账号授权
 Route::get('auth','AuthController@index'); #-- authoriztion
 Route::get('b2c','AuthController@b2c'); #-- b2c
+Route::post('authSave','AuthController@authSave'); #-- add authoriation
 
 #.个人中心
 Route::get('userIndex','UserController@index'); #-- Safety

@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends CommonController
 {
+    public function __construct()
+    {
+        $this->middleware('');
+    }
     //
     /**
      * shipping authoriztion
@@ -62,11 +66,7 @@ class AuthController extends CommonController
             return $this->returnJsons($return);
         }
 
-        if (empty($params['platform'])){
-            $return['state'] = 0;
-            $return['message'] = '平台类型不能为空';
-            return $this->returnJsons($return);
-        }
+
 
         if (empty($params['site'])){
             $return['state'] = 0;
@@ -96,7 +96,6 @@ class AuthController extends CommonController
             'usa_add_time' => date("Y-m-d H:i:s"),
             'usa_auth_time' => date("Y-m-d H:i:s"),
             'store_name' => $params['store_name'],
-            'platform' => $params['platform']
         ]);
         if ($res){
             $return['state'] = 1;
@@ -111,6 +110,22 @@ class AuthController extends CommonController
 
     public function b2c(){
         return View::make('authoriz.b2c');
+    }
+
+
+    /**
+     * check authoriztion
+     */
+    public function authCheck(req $request){
+        $return = $this->returnArr;
+        $authId = $request->input('auth_id');
+        if (empty($params)){
+            $return['state'] = 0;
+            $return['message'] = '参数错误';
+            return $this->returnJsons($return);
+        }
+        $seller =DB::table('user_system_authorization')->where('usa_seller_id','=',$params['seller_id'])->get();
+
     }
 
 }

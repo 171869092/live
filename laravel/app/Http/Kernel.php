@@ -20,6 +20,9 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\EnableCrossRequestMiddleware::class,//新增跨域中间件
+//        OpenRequest::class,
+//        \App\Http\Middleware\OpenRequest::class
+        \Barryvdh\Cors\HandleCors::class
     ];
 
     /**
