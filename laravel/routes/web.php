@@ -20,12 +20,17 @@ Route::get('hello','UserController@index');
 #. 用户管理
 Route::get('members','MembersController@index');
 
+#. 菜单
+Route::get('menu','UserController@getMenu');
+
 #. 订单
 Route::get('orders','ordersController@index'); #-- list
 Route::get('abnormal','ordersController@abnormal'); #-- exception
 Route::get('timeout','ordersController@timeout'); #-- timeout
 Route::get('bounces','ordersController@bounces'); #-- bounces
 Route::get('import','ordersController@import'); #-- import
+Route::get('handPullOrder','ordersController@handPullOrder'); #-- get order
+
 
 #.账号授权
 Route::get('auth','AuthController@index'); #-- authoriztion

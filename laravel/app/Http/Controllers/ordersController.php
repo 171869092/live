@@ -79,4 +79,37 @@ class ordersController extends CommonController
         return $this->returnJsons($return);
     }
 
+
+    /**
+     * hand pull order
+     * @param REQ $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function handPullOrder(REQ $request){
+        $return = $this->returnArr;
+        $stTime = $request->input('start_time',date('Y-m-d'));
+        $endTime = $request->input('end_time','');
+        $authId = $request->input('auth_id');
+        $status = $request->input('status','');
+
+        #. check authoriztion
+        $check = $this->checkAuthoriztion($authId);
+        if (isset($check) && $check !== true){
+            $return['state'] = 0;
+            $return['message'] = '账号检测授权失败';
+            return $this->returnJsons($return);
+        }
+
+        $result = ORDERS::getOrder($authId,$stTime,$endTime,$status);
+
+        if ($result !== true){
+            $return['state'] = 0;
+            $return['message'] = 'Fail';
+        }else{
+            $return['state'] = 1;
+            $return['message'] = 'Success';
+        }
+        return $this->returnJsons($return);
+    }
+
 }

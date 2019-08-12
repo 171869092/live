@@ -95,8 +95,6 @@ class UserController extends CommonController
      * index get user right meuen
      * @return \Illuminate\Http\JsonResponse
      */
-
-
     public function getUrserRight(){
         $return = $this->returnArr;
         $userId = session('userId');
@@ -121,6 +119,31 @@ class UserController extends CommonController
         }
 
         return $this->returnJsons($return);
+    }
+
+
+    /**
+     * get menu
+     * @param REQ $request
+     */
+    public function getMenu(REQ $request){
+        $return = $this->returnArr;
+        $data = $request->all();
+        $page = $request->input('page',1);
+        $pageSize = $request->input('pageSize',1);
+//        if (empty($data)){
+//            $return['state'] = 0;
+//            $return['message'] = 'Fail';
+//        }
+        $result = DB::table('user_menu')->paginate($pageSize,['*'],'page',$page)->toArray();
+
+        if (empty($result)){
+            $return['state'] = 0;
+            $return['message'] = 'Fail';
+        }else{
+            $return['state'] = 1;
+            $return['message'] = 'Success';
+        }
     }
 
 }

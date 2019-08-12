@@ -4,11 +4,15 @@ namespace App\Service;
 
 use DOMDocument;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use MarketplaceWebServiceOrders_Exception;
 use MarketplaceWebServiceOrders_Interface;
+use PHPUnit\Framework\MockObject\Stub\ReturnSelf;
 
 class Common extends Model
 {
+
+
     /**
      * authoriztion check
      * @param MarketplaceWebServiceOrders_Interface $service
@@ -19,10 +23,6 @@ class Common extends Model
     {
         try {
             $response = $service->GetServiceStatus($request);
-
-            echo ("Service Response\n");
-            echo ("=============================================================================\n");
-
 //            $dom = new DOMDocument();
 //            $dom->loadXML($response->toXML());
 //            $dom->preserveWhiteSpace = false;
@@ -45,5 +45,27 @@ class Common extends Model
             echo("ResponseHeaderMetadata: " . $ex->getResponseHeaderMetadata() . "\n");
             return false;
         }
+    }
+
+    public static function checkAuthoriztion($authId){
+        if (empty($authId)){
+            return false;
+        }
+        $return = [];
+        try {
+            $auth =DB::table('user_system_authorization')->where('usa_id','=',$authId)->get();
+            if (empty($auth)){
+                $return['message'] = '未找到授权用户';
+                return $return;
+            }
+            require_once(__DIR__.'/../src/MarketplaceWebServiceOrders/Samples/.config.inc.php');
+            $serviceUrl = self::$webArr['eu'];
+
+        }catch (\Exception $exception){
+            exit($exception->getMessage());
+        }
+
+
+
     }
 }

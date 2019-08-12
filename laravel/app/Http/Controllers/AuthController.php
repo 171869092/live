@@ -10,27 +10,12 @@ use App\Service\Common;
 
 class AuthController extends CommonController
 {
-    public static $webArr = [
-        'eu' => "https://mws-eu.amazonservices.com/Orders/2013-09-01"
-    ];
-    public $configur = [];
-    public static $site = 'amzn.mws.3eb3a9ec-b6e3-3567-90b6-7a814f7624d9';
-
+    //
     public function __construct()
     {
-        if (empty($this->configur)){
-            $this->configur = [
-                'ServiceURL' => '',
-                'ProxyHost' => null,
-                'ProxyPort' => -1,
-                'ProxyUsername' => null,
-                'ProxyPassword' => null,
-                'MaxErrorRetry' => 3,
-            ];
-        }
-
+        parent::__construct();
     }
-    //
+
     /**
      * shipping authoriztion
      * @return \Illuminate\Contracts\View\View
@@ -151,6 +136,7 @@ class AuthController extends CommonController
             $return['message'] = '参数错误';
             return $this->returnJsons($return);
         }
+
         require_once(__DIR__.'/../../src/MarketplaceWebServiceOrders/Samples/.config.inc.php');
         $serviceUrl = self::$webArr['eu'];
 

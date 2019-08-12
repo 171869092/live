@@ -94,17 +94,17 @@ class authorization extends BaseController{
 //        $da = $client->GetOrder('303-8040564-4169135');
 //        var_dump($da);die;
 //
-//        $fromDate = new \DateTime('2013-01-01');
-//        $orders = $client->ListOrders($fromDate);
-//        $res = [];
-//        echo "<pre>";
-//        foreach ($orders as $order) {
-//            $items = $client->ListOrderItems($order['AmazonOrderId']);
-//            $res[] = $items;
-////            print_r($order);
-////            print_r($items);
-//        }
-//        var_dump($orders);die;
+        $fromDate = new \DateTime('2013-01-01');
+        $orders = $client->ListOrders($fromDate);
+        $res = [];
+        echo "<pre>";
+        foreach ($orders as $order) {
+            $items = $client->ListOrderItems($order['AmazonOrderId']);
+            $res[] = $items;
+//            print_r($order);
+//            print_r($items);
+        }
+        var_dump($orders);die;
 
         if($client->validateCredentials()){
             echo 111;die;
