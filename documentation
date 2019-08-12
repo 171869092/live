@@ -1,0 +1,52 @@
+！------------------------------- 获取菜单list -------------------------------！
+http://118.25.155.176:8080/getMenu
+Requests:
+type        get
+page        页码
+pageSize    每页显示条数
+
+Response:
+state: 0    //. 状态码 0：fail  1：success
+message:    //. 具体信息
+data:       //.具体数据
+
+示例：
+-----
+{
+    "state":1,
+    "message":"success",
+    "data":
+        [{
+            "um_id": 1,     主键id
+            "us_id": "",        用户id
+            "um_system": "",    系统默认：wms
+            "um_code": "",
+            "parent_id": "",    父菜单id
+            "um_title": "",     菜单名称
+            "um_title_en": "",  菜单名称英语
+            "um_url": "",   url
+            "um_sort": "",  排序字段，
+            "add_time"： "2019-08-08"    添加时间
+        }]
+}
+
+
+！------------------------------- 添加菜单 -------------------------------！
+http://118.25.155.176:8080/addMenu
+Requests:
+type        get
+page        页码
+pageSize    每页显示条数
+
+Response:
+state: 0    //. 状态码 0：fail  1：success
+message:    //. 具体信息
+data:       //.具体数据
+
+示例：
+-----
+{
+    "state":1,
+    "message":"success",
+    "data":""
+}

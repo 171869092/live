@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Service\ApiAccessToken as APITOKEN;
+use App\Table\ApiAccessToken as APITOKEN;
 
 class ApiAccessToken extends Model
 {

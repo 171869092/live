@@ -131,10 +131,7 @@ class UserController extends CommonController
         $data = $request->all();
         $page = $request->input('page',1);
         $pageSize = $request->input('pageSize',1);
-//        if (empty($data)){
-//            $return['state'] = 0;
-//            $return['message'] = 'Fail';
-//        }
+
         $result = DB::table('user_menu')->paginate($pageSize,['*'],'page',$page)->toArray();
 
         if (empty($result)){
@@ -144,6 +141,31 @@ class UserController extends CommonController
             $return['state'] = 1;
             $return['message'] = 'Success';
         }
+        return $this->returnJsons($return);
+    }
+
+    /**
+     * add menu
+     * @param REQ $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addMenu(REQ $request){
+        $return = $this->returnArr;
+        $data = $request->all();
+
+        if (empty($data)){
+            $return['state'] = 0;
+            $return['message'] = 'Fail';
+        }
+        $result = 1;
+        if (empty($result)){
+            $return['state'] = 0;
+            $return['message'] = 'Fail';
+        }else{
+            $return['state'] = 1;
+            $return['message'] = 'Success';
+        }
+        return $this->returnJsons($return);
     }
 
 }

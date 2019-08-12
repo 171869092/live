@@ -21,7 +21,8 @@ Route::get('hello','UserController@index');
 Route::get('members','MembersController@index');
 
 #. 菜单
-Route::get('menu','UserController@getMenu');
+Route::get('getMenu','UserController@getMenu'); #-- menu list
+Route::post('addMenu','UserController@addMenu'); #-- menu list
 
 #. 订单
 Route::get('orders','ordersController@index'); #-- list
@@ -64,3 +65,8 @@ Route::get('authtest','authorization@runAuthorization');
 Route::get('test','UserController@urserRight');
 Route::get('testPlaceEdit','PlaceController@placeEdit');
 Route::get('testgetCategory','PlaceController@getCategory');
+
+//ApiLogic
+Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
+    Route::get('/index', 'ApiLogisticsController@index')->name('index');
+});

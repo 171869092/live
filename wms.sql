@@ -182,3 +182,134 @@ CREATE TABLE IF NOT EXISTS `order_additional` (
   KEY `oa_order_id` (`order_id`,`oa_is_checking`) USING BTREE,
   KEY `idx_is_checking` (`oa_is_checking`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='订单属性表(一对一)';
+
+#API账号信息表
+CREATE TABLE IF NOT EXISTS `api_service` (
+  `as_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自动增长列',
+  `as_code` varchar(32) NOT NULL DEFAULT '' COMMENT 'API服务代码',
+  `as_code_ref` varchar(64) NOT NULL DEFAULT '' COMMENT '参考号',
+  `as_name` varchar(50) NOT NULL DEFAULT '' COMMENT 'API服务名称',
+  `as_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '服务类型 0 仓储服务商 1 物流服务商',
+  `as_is_authorize` tinyint(1) DEFAULT '0' COMMENT '是否已经授权 0 未授权 1已授权',
+  `as_status` tinyint(1) DEFAULT '0' COMMENT '状态 0 启用 1 关闭',
+  `as_user` varchar(255) DEFAULT '',
+  `as_pwd` text COMMENT '账号密码',
+  `cig_user` varchar(50) DEFAULT '' COMMENT '开发者账号',
+  `cig_pwd` text COMMENT '开发者密码',
+  `as_custom_varchar` varchar(50) DEFAULT '' COMMENT '自定义',
+  `as_token` text COMMENT '秘钥',
+  `as_address` varchar(255) DEFAULT '' COMMENT '服务地址',
+  `as_address1` varchar(255) DEFAULT '' COMMENT '服务附加地址1',
+  `as_address2` varchar(255) DEFAULT '' COMMENT '服务附加地址2',
+  `as_application` varchar(50) DEFAULT '' COMMENT '服务应用代码',
+  `as_environment` varchar(50) DEFAULT '',
+  `as_print_scan_form` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支持scan form',
+  `as_account` varchar(50) DEFAULT '' COMMENT '支付账号',
+  `as_ekp` varchar(50) DEFAULT '' COMMENT 'EKP',
+  `as_partner` varchar(255) DEFAULT '' COMMENT '合作伙伴ID',
+  `as_ignore_exception` tinyint(1) DEFAULT '0' COMMENT '是否忽略服务商截单异常 0 否 1 是',
+  `as_logo_image` varchar(50) DEFAULT '' COMMENT 'API服务商logo',
+  `as_add_date` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '添加时间',
+  `as_update_date` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  `as_creater` int(11) DEFAULT '0' COMMENT '创建人',
+  `as_updater` int(11) DEFAULT '0' COMMENT '修改人',
+  `as_path` varchar(100) DEFAULT NULL,
+  `as_create_order_confirmship` tinyint(1) NOT NULL DEFAULT '0' COMMENT '建立订单立时确认交运',
+  `as_order_confirmship_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否需要确认交运',
+  `as_order_waiting_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '订单是否需要等待',
+  `as_width` int(10) DEFAULT '100' COMMENT '标签宽度',
+  `as_height` int(10) DEFAULT '150' COMMENT '标签高度',
+  `as_custom_tracking_number` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支持自定义跟踪号',
+  `as_func` varchar(100) DEFAULT '' COMMENT '获取PDF的方法',
+  `as_print_mode` varchar(20) DEFAULT 'HTML' COMMENT '打印模式 如: pdf、script(面单)、html、gif、png',
+  `as_warehouse_multiple` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支持多仓库配置 0:不支持 1:支持',
+  `as_open_oapi` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开启OAPI',
+  `as_trial` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否提供API试算',
+  `as_wms_mark_ship` tinyint(1) NOT NULL DEFAULT '0' COMMENT '特殊标发',
+  `as_edit_label_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '标签类型,1:序号、一个库位  2:序号、全部库位 3:序号',
+  `as_oapi_code` varchar(50) NOT NULL DEFAULT '' COMMENT 'OAPI系统代码：DC(国内),HK(香港),海外(OV)',
+  `as_forced_sync` tinyint(1) NOT NULL DEFAULT '0' COMMENT '配置上传跟踪号后是否还同步到服务商系统 1:是',
+  `as_is_hide` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否隐藏',
+  `as_mapping_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '映射类型（1，多个物流商 2，多个账号）',
+  `as_useq` varchar(200) DEFAULT '',
+  `as_currency_code` char(3) NOT NULL DEFAULT 'RMB' COMMENT '结算币种',
+  `as_remarks` text NOT NULL COMMENT '备注',
+  `as_sync_trackno` tinyint(1) DEFAULT '0' COMMENT '是否支持同步更新跟踪号：0-否 1-是',
+  `as_reserve1` varchar(255) NOT NULL DEFAULT '' COMMENT '备用字段1',
+  `as_reserve2` varchar(255) NOT NULL DEFAULT '' COMMENT '备用字段2',
+  `as_reserve3` varchar(255) NOT NULL DEFAULT '' COMMENT '备用字段3',
+  `as_reserve4` varchar(255) NOT NULL DEFAULT '' COMMENT '备用字段4',
+  `as_reserve5` varchar(255) NOT NULL DEFAULT '' COMMENT '备用字段5',
+  `as_water_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '标签水印添加类型：0：不添加，1：OAPI添加，2：ERP添加，3：OWMS添加',
+  `as_is_oauth` tinyint(1) NOT NULL DEFAULT '0',
+  `as_async_intercept` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:异步拦截',
+  `as_is_multiple_shipping` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支持多段预报：0-否，1-是',
+  `as_custom_number_rule` tinyint(1) NOT NULL DEFAULT '0' COMMENT '自定义订单号规则(避免重复) 0:否 1:是',
+  `as_get_label` tinyint(1) DEFAULT '0' COMMENT '是否支持重新下载标签：0否，1是',
+  `as_get_trackingnumber` tinyint(1) DEFAULT '0' COMMENT '是否支持重新获取跟踪号：0否，1是',
+  `as_stop` tinyint(1) DEFAULT '0' COMMENT '是否支持API拦截：0否，1是',
+  `as_is_print_invoice` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支持打印服务商发票：0-否，1-是',
+  `as_is_transfer_service` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支持头程服务：0-否，1-是',
+  `as_last_cun_id` int(11) NOT NULL DEFAULT '0' COMMENT '状态通知功能对应的最后更新id，初始值为0',
+  `as_is_systemNotice` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否支持状态同步通知功能，默认为0，0否1是',
+  `as_is_token` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否刷新token 默认为0 0否1是',
+   `as_create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `as_update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`as_id`),
+  UNIQUE KEY `as_code_index` (`as_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='API服务表';
+
+
+#地址簿
+CREATE TABLE IF NOT EXISTS `ship_address_book` (
+  `sab_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sab_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '物流地址类型；1-发货；2-退件；3-揽收;4收件人地址',
+  `sab_campany_name` varchar(256) NOT NULL DEFAULT '' COMMENT '公司名称',
+  `sab_user_name` varchar(16) NOT NULL DEFAULT '' COMMENT '联系人',
+  `sab_country_name` varchar(16) NOT NULL DEFAULT '' COMMENT '国家',
+  `sab_country` varchar(30) NOT NULL DEFAULT '' COMMENT '国家中文名称，英文名称，国家二字码中的任意一种',
+  `sab_state` varchar(32) NOT NULL DEFAULT '' COMMENT '州',
+  `sab_city` varchar(32) NOT NULL DEFAULT '' COMMENT '城市',
+  `sab_postcode` varchar(10) NOT NULL DEFAULT '' COMMENT 'postcode',
+  `sab_phone` varchar(32) NOT NULL DEFAULT '' COMMENT '电话',
+  `sab_cell_phone` varchar(32) NOT NULL DEFAULT '' COMMENT '手提电话',
+  `sab_fax` varchar(32) NOT NULL DEFAULT '' COMMENT '传真',
+  `sab_email` varchar(50) NOT NULL DEFAULT '' COMMENT 'email',
+  `sab_street_address1` varchar(128) NOT NULL DEFAULT '' COMMENT 'address1',
+  `sab_street_address2` varchar(128) NOT NULL DEFAULT '' COMMENT 'address2',
+  `sab_house_number` varchar(10) NOT NULL DEFAULT '' COMMENT '门牌号',
+  `sab_address_detail` varchar(128) NOT NULL DEFAULT '' COMMENT '地址详细信息',
+  `sab_update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '最后更新时间',
+  `sab_create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '最后修改时间',
+  `sab_country_code` char(4) NOT NULL DEFAULT '' COMMENT '国家二字码',
+  `sab_area` varchar(256) NOT NULL DEFAULT '' COMMENT '区',
+  `sab_firstname` varchar(256) NOT NULL DEFAULT '' COMMENT '姓',
+  `sab_lastname` varchar(256) NOT NULL DEFAULT '' COMMENT '名',
+  `sab_street` varchar(256) NOT NULL DEFAULT '' COMMENT '街道',
+  `sab_country_codeios` varchar(256) NOT NULL DEFAULT '' COMMENT '国家三字码',
+  PRIMARY KEY (`sab_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='物流地址簿';
+
+
+
+#发货人地址id
+ALTER TABLE `orders`
+ADD COLUMN `ship_address_id` int(11) NOT NULL DEFAULT 0 COMMENT '发货地址id' AFTER `sync_express_ship`;
+#揽收地址id
+ALTER TABLE `orders`
+ADD COLUMN `pickup_address_id` int(11) NOT NULL DEFAULT 0 COMMENT '揽收地址id' AFTER `sync_express_ship`;
+#回邮地址id
+ALTER TABLE `orders`
+ADD COLUMN `returninfo_address_id` int(11) NOT NULL DEFAULT 0 COMMENT '回邮地址id' AFTER `sync_express_ship`;
+#收件人地址id
+ALTER TABLE `orders`
+ADD COLUMN `consignee_address_id` int(11) NOT NULL DEFAULT 0 COMMENT '收件人地址id' AFTER `sync_express_ship`;
+#渠道代码
+ALTER TABLE `orders`
+ADD COLUMN `service_code_type` varchar(255) NOT NULL DEFAULT '' COMMENT '渠道代码' AFTER `sync_express_ship`;
+#订单id
+ALTER TABLE `product`
+ADD COLUMN `order_id` varchar(255) NOT NULL DEFAULT '' COMMENT '订单id' AFTER `prt_id`;
+#产品数量
+ALTER TABLE `product`
+ADD COLUMN `product_quantity` varchar(255) NOT NULL DEFAULT '' COMMENT '产品数量' AFTER `prt_id`;
