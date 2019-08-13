@@ -157,7 +157,22 @@ class UserController extends CommonController
             $return['state'] = 0;
             $return['message'] = 'Fail';
         }
-        $result = 1;
+        if (empty($data['us_id'])){
+            $return['state'] = 0;
+            $return['message'] = '参数错误';
+        }
+
+
+        $result = DB::table('user_menu')->insertGetId([
+            'us_id' => $data['us_id'],
+            'um_code' => $data['um_code'],
+            'parent_id' => $data['parent_id'],
+            'um_title' => $data['um_title'],
+            'um_title_en' => $data['um_title_en'],
+            'um_url' => $data['um_url'],
+            'add_time' => date('Y-m-d H:i:s'),
+        ]);
+
         if (empty($result)){
             $return['state'] = 0;
             $return['message'] = 'Fail';
