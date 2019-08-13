@@ -162,17 +162,20 @@ class UserController extends CommonController
             $return['message'] = '参数错误';
         }
 
-
-        $result = DB::table('user_menu')->insertGetId([
-            'us_id' => $data['us_id'],
-            'um_code' => $data['um_code'],
-            'parent_id' => $data['parent_id'],
-            'um_title' => $data['um_title'],
-            'um_title_en' => $data['um_title_en'],
-            'um_url' => $data['um_url'],
-            'add_time' => date('Y-m-d H:i:s'),
-        ]);
-
+        try{
+            $result = DB::table('user_menu')->insertGetId([
+                'us_id' => $data['us_id'],
+                'um_code' => $data['um_code'],
+                'parent_id' => isset($data['parent_id'])?$data['parent_id']:0,
+                'um_title' => $data['um_title'],
+                'um_title_en' => $data['um_title_en'],
+                'um_url' => $data['um_url'],
+                'add_time' => date('Y-m-d H:i:s'),
+            ]);
+        }catch (\Exception $exception){
+            die($exception->getMessage());
+        }
+        
         if (empty($result)){
             $return['state'] = 0;
             $return['message'] = 'Fail';
