@@ -30,7 +30,7 @@ Route::get('abnormal','ordersController@abnormal'); #-- exception
 Route::get('timeout','ordersController@timeout'); #-- timeout
 Route::get('bounces','ordersController@bounces'); #-- bounces
 Route::get('import','ordersController@import'); #-- import
-Route::get('handPullOrder','ordersController@handPullOrder'); #-- get order
+Route::post('handPullOrder','ordersController@handPullOrder'); #-- get order
 
 
 #.账号授权
