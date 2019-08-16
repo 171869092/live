@@ -94,6 +94,8 @@
       <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/laravel/vendor/laravelcollective/html" />
       <path value="$PROJECT_DIR$/laravel/vendor/illuminate/html" />
+      <path value="$PROJECT_DIR$/laravel/vendor/asm89/stack-cors" />
+      <path value="$PROJECT_DIR$/laravel/vendor/barryvdh/laravel-cors" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

@@ -34,9 +34,15 @@ data:       //.具体数据
 ！------------------------------- 添加菜单 -------------------------------！
 http://118.25.155.176:8080/addMenu
 Requests:
-type        get
-page        页码
-pageSize    每页显示条数
+type        post
+'us_id'     权限 (id)
+'um_code'   自定义code
+'parent_id' 父级权限 (id)
+'um_title'  菜单名称 中文
+'um_title_en' 菜单名称 英文
+'um_url'    菜单链接
+'um_system'    当前系统 默认 wms
+
 
 Response:
 state: 0    //. 状态码 0：fail  1：success
@@ -45,8 +51,4 @@ data:       //.具体数据
 
 示例：
 -----
-{
-    "state":1,
-    "message":"success",
-    "data":""
-}
+{"state":1,"message":"success","data":""}

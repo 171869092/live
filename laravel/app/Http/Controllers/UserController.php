@@ -175,7 +175,7 @@ class UserController extends CommonController
         }catch (\Exception $exception){
             die($exception->getMessage());
         }
-        
+
         if (empty($result)){
             $return['state'] = 0;
             $return['message'] = 'Fail';

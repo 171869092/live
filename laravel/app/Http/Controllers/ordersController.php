@@ -99,9 +99,8 @@ class ordersController extends CommonController
             $return['message'] = '账号检测授权失败';
             return $this->returnJsons($return);
         }
-
         $result = ORDERS::getOrder($authId,$stTime,$endTime,$status);
-
+var_dump($result);
         if ($result !== true){
             $return['state'] = 0;
             $return['message'] = 'Fail';
