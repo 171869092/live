@@ -72,7 +72,7 @@ class orders extends Model
         if (empty($authId)){
             return false;
         }
-        $auth =DB::table('user_system_authorization')->where('usa_id','=',$authId)->get();
+        $auth =DB::table('user_system_authorization')->where('usa_id','=',$authId)->get()->toArray();
 
         if (empty($auth)){
             return false;
@@ -95,8 +95,8 @@ class orders extends Model
             APPLICATION_VERSION,
             $config);
         $request = new \MarketplaceWebServiceOrders_Model_ListOrdersRequest();
-        $request->setSellerId(MERCHANT_ID);
-        $request->setMWSAuthToken('amzn.mws.3eb3a9ec-b6e3-3567-90b6-7a814f7624d9');
+        $request->setSellerId($auth[0]['usa_seller_id']?$auth[0]['usa_seller_id']:0);
+        $request->setMWSAuthToken($auth[0]['usa_auth_code']?$auth[0]['usa_auth_code']:0);
         if (isset($staTime)){
             $request->setCreatedAfter('2019-01-01');
         }
