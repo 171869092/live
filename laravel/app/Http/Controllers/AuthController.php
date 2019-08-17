@@ -129,7 +129,7 @@ class AuthController extends CommonController
             return $this->returnJsons($return);
         }
 
-        $auth =DB::table('user_system_authorization')->where('usa_id','=',$authId)->get();
+        $auth =DB::table('user_system_authorization')->where('usa_id','=',$authId)->get()->toArray();
 
         if (empty($auth)){
             $return['state'] = 0;
@@ -148,15 +148,25 @@ class AuthController extends CommonController
             $this->configur);
 
         $request = new MarketplaceWebServiceOrders_Model_GetServiceStatusRequest();
-        $request->setSellerId(MERCHANT_ID);
-        $request->setMWSAuthToken(self::$site);
+        $request->setSellerId($auth[0]['usa_seller_id']?$auth[0]['usa_seller_id']:0);
+        $request->setMWSAuthToken($auth[0]['usa_auth_code']?$auth[0]['usa_auth_code']:0);
         // object or array of parameters
 
         $result = Common::invokeGetServiceStatus($obj, $request);
         if (true === $result){
+            #.检测成功修改状态
+            DB::table('user_system_authorization')->where('usa_id','=',$authId)->update([
+                'usa_auth_status'=>1,
+                'usa_update_time'=>date('Y-m-d H:i:s')
+            ]);
             $return['state'] = 1;
             $return['message'] = 'Success';
         }else{
+            #.检测失败修改状态
+            DB::table('user_system_authorization')->where('usa_id','=',$authId)->update([
+                'usa_auth_status'=>0,
+                'usa_update_time'=>date('Y-m-d H:i:s')
+            ]);
             $return['state'] = 0;
             $return['message'] = 'Fail';
         }
