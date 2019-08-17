@@ -138,7 +138,7 @@ class AuthController extends CommonController
         }
 
         require_once(__DIR__.'/../../src/MarketplaceWebServiceOrders/Samples/.config.inc.php');
-        $serviceUrl = self::$webArr['eu'];
+        $serviceUrl = self::$webArr[$auth[0]['usa_region']];
 
         $this->configur['ServiceURL'] = $serviceUrl;
         $obj = new \MarketplaceWebServiceOrders_Client(AWS_ACCESS_KEY_ID,

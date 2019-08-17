@@ -17,7 +17,30 @@ class orders extends Model
     protected $ORDERSTATUS;  #. 订单状态
     protected $REDIS;        #. rds
 
+    public static $webArr = [
+        'eu' => "https://mws-eu.amazonservices.com/Orders/2013-09-01",
+        'DE' => "https://mws-eu.amazonservices.com/Orders/2013-09-01",
+        'ES' => "https://mws-eu.amazonservices.com/Orders/2013-09-01",
+        'FR' => "https://mws-eu.amazonservices.com/Orders/2013-09-01",
+        'GB' => "https://mws-eu.amazonservices.com/Orders/2013-09-01",
+        'AU' => "https://mws.amazonservices.com.au/Orders/2013-09-01",
+        'JP' => "https://mws.amazonservices.jp/Orders/2013-09-01",
+        'US' => "https://mws.amazonservices.com/Orders/2013-09-01",
+        'CA' => "https://mws.amazonservices.ca/Orders/2013-09-01",
+        'MX' => "https://mws.amazonservices.com.mx/Orders/2013-09-01",
+    ];
 
+    public static $sites = [
+        'DE' => 'A1PA6795UKMFR9',
+        'ES' => 'A1RKKUPIHCS9HS',
+        'FR' => 'A13V1IB3VIYZZH',
+        'GB' => 'A1F83G8C2ARO7P',
+        'AU' => 'A39IBJ37TRP1C6',
+        'JP' => 'A1VC38T7YXB528',
+        'US' => 'ATVPDKIKX0DER',
+        'CA' => 'A2EUQ1WTGCTBG2',
+        'MX' => 'A1AM78C64UM0Y8',
+    ];
     public function __construct($type = '')
     {
         $this->REDIS = Redis::connection('my_redis');
@@ -79,8 +102,8 @@ class orders extends Model
         }
 
         require_once(__DIR__.'/../src/MarketplaceWebServiceOrders/Samples/.config.inc.php');
-//        $serviceUrl = self::$webArr['eu'];
-        $serviceUrl = "https://mws-eu.amazonservices.com/Orders/2013-09-01";
+        $serviceUrl = self::$webArr[$auth[0]['usa_region']];
+//        $serviceUrl = "https://mws-eu.amazonservices.com/Orders/2013-09-01";
         $config = array (
             'ServiceURL' => $serviceUrl,
             'ProxyHost' => null,
@@ -107,7 +130,7 @@ class orders extends Model
             $request->setOrderStatus($status);
         }
 
-        $request->SetMarketplaceId('A1PA6795UKMFR9');
+        $request->SetMarketplaceId(self::$sites[$auth[0]['usa_region']]);
         $result = self::invokeListOrderItemsx($obj, $request);
         if (true === $result){
             return true;
