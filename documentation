@@ -52,3 +52,19 @@ data:       //.具体数据
 示例：
 -----
 {"state":1,"message":"success","data":""}
+
+！------------------------------- 一件发货 -------------------------------！
+http://118.25.155.176:8080/execShip
+Requests:
+type        post
+'ship_num'     运单号
+
+
+Response:
+state: 0    //. 状态码 0：fail  1：success
+message:    //. 具体信息
+data:       //.具体数据
+
+示例：
+-----
+{"state":1,"message":"success","data":""}

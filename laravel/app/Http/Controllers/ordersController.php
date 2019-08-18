@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Service\orders as ORDERS;
+use http\Env\Request;
 use Illuminate\Http\Request as REQ;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -106,6 +107,30 @@ class ordersController extends CommonController
         }else{
             $return['state'] = 1;
             $return['message'] = 'Success';
+        }
+        return $this->returnJsons($return);
+    }
+
+    /**
+     * ship
+     * @param REQ $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function execShip(REQ $request){
+        $return = $this->returnArr;
+        $shipNum = $request->input('ship_num');
+        if (empty($shipNum)){
+            $return['state'] = 0;
+            $return['message'] = 'Fail';
+            return $this->returnJsons($return);
+        }
+        $result = ORDERS::saveOrder($shipNum);
+        if ($result){
+            $return['state'] = 1;
+            $return['message'] = 'Success';
+        }else{
+            $return['state'] = 0;
+            $return['message'] = 'Fail';
         }
         return $this->returnJsons($return);
     }

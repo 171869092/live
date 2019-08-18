@@ -52,7 +52,7 @@ class orders extends Model
      * @param array $params
      * @return ODS[]|\Illuminate\Database\Eloquent\Collection
      */
-    public static function getOrderList(array $params)
+    public static function getOrderLi(array $params)
     {
         $pars = self::verification($params);
         if (!empty($pars['error'])){
@@ -302,6 +302,13 @@ class orders extends Model
         }
 
         return $error;
+    }
+
+
+    public static function saveShipping($shipId){
+        $res = [];
+        return true;
+
     }
 
 }
