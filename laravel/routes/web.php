@@ -32,7 +32,7 @@ Route::get('bounces','ordersController@bounces'); #-- bounces
 Route::get('import','ordersController@import'); #-- import
 Route::post('handPullOrder','ordersController@handPullOrder'); #-- get order
 #. 执行订单一件发货
-Route::get('execShip','ordersController@execShip');
+Route::post('execShip','ordersController@execShip');
 
 
 #.账号授权
