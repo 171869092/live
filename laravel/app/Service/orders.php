@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Service\ShunFeng\CreateorderExpressWebService;
 use DOMDocument;
 use Illuminate\Database\Eloquent\Model;
 use App\Table\orders as ODS;
@@ -305,9 +306,72 @@ class orders extends Model
     }
 
 
-    public static function saveShipping($shipId){
+    /**
+     * 顺丰
+     * @param $order
+     * @param $shipId
+     * @return bool
+     */
+    public static function saveShipping($order, $shipId){
         $res = [];
-        return true;
+        #. 构建参数
+        $res = DB::table('orders')->where('order_code','=',$order)->get()->toArray()[0];
+
+        $post = [
+            'order' => [
+                'orderNo' => $res['order_code'],
+                'length' => '1',
+                'width' => '2',
+                'height' => '3',
+                'platform' => $res['platform'],
+                'consigneeName' => '',
+                'consigneePhone' => '',
+                'consigneeStateOrProvince' => '',
+                'consigneeCity' => '',
+                'consigneePostalCode' => '',
+                'consigneeCountryCode' => '',
+                'declaredValue' => '',
+                'federalTaxId' => '',
+                'consigneeEmail' => '',
+                'consigneeAddress1' => '',
+                'referenceID' => '',
+                'serverCodeType' => ''
+            ],
+            'shipper'=>[
+                'shipperCompanyName' => '',
+                'shipperName' => '',
+                'shipperPhone' => '',
+                'shipperCellPhone' => '',
+                'shipperStateOrProvince' => '',
+                'shipperCity' => '',
+                'shipperPostCode' => '',
+                'shipperAddress1' => '',
+                'shipperAddress2' => ''
+            ],
+            'orderItem' => [[
+                'titleCn' => '1',	    //申报必须英文
+                'titleEn' => '2',       //商品（英文）报关品名
+                'cname' => '3',         //商品（中文）报关品名
+                'quantity' => '4',	    //数量
+                'unit' => 'Piece',		//货物单位
+                'weight' =>	'5',		//单位重量
+                'value' => '33.2',	    //货物单价
+                'currency' => 'USD',	//单价币种（固定）
+                'order_url' => '2',	    //电商专递货物url（express_type为29时必填）
+                'hsCode' => '',
+                'hasBattery' => 0
+            ]],
+            'account' => ''
+
+        ];
+        $obj = new CreateorderExpressWebService($post);
+        $obj->orderDataSet();
+        $result = $obj->createAndPreAlertOrderService();
+        if ($result['code'] == '100'){
+            return true;
+        }else{
+            return false;
+        }
 
     }
 

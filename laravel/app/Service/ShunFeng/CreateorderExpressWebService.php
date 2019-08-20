@@ -105,10 +105,13 @@ class CreateorderExpressWebService
 		//物品信息
 		$weight = 0;
 		$hasBattery = 1; //是否带电池
+
 		foreach ($this->post_data['orderItem'] as $oKey=>$oVal){
+
 			if($oVal['hasBattery'] == '1'){
 				$hasBattery = 0;
 			}
+
 			$weight += $oVal["weight"];
 			$productArray[] = array (
 				'@attributes' => array (

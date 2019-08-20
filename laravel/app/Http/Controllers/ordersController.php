@@ -118,13 +118,15 @@ class ordersController extends CommonController
      */
     public function execShip(REQ $request){
         $return = $this->returnArr;
+        $order = $request->input('order');
         $shipNum = $request->input('ship_num');
-        if (empty($shipNum)){
+        if (empty($shipNum) || empty($order)){
             $return['state'] = 0;
             $return['message'] = 'Fail';
             return $this->returnJsons($return);
         }
-        $result = ORDERS::saveOrder($shipNum);
+        $order = '028-4355636-7448325';
+        $result = ORDERS::saveShipping($order,$shipNum);
         if ($result){
             $return['state'] = 1;
             $return['message'] = 'Success';
